@@ -1,0 +1,10 @@
+{% include "header.html" %}
+        <h1>Previous Orders</h1>
+
+        <table>
+            <tr><th>Name</th><th>Quantity</th><th>Subtotal</th></tr>
+            {% for order in order_list %}
+            <tr><td> {{order["name"]}} </td><td> {{order["qty"]}} </td><td> {{order["subtotal"]}}</td></tr>
+            {% endfor %}
+        </table>
+{% include "footer.html" %}
