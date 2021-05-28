@@ -136,7 +136,7 @@ def changeqty():
     cart = session["cart"]
     code = request.form.get('code')
     qty = int(request.form.get("qty"))
-    
+
     product = db.get_product(int(code))
 
     if qty == 0:
@@ -145,9 +145,9 @@ def changeqty():
         cart[code]["qty"] = qty
         cart[code]["subtotal"] = qty * product["price"]
         session["cart"] = cart
-    
+
     session['cart'] = cart
-    
+
 
     return redirect('/cart')
 

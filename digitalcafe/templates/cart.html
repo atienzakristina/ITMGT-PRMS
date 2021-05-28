@@ -5,7 +5,9 @@
             <table>
             <tr><th>Name</th><th>Quantity</th><th>Subtotal</th></tr>
             {% for item in session["cart"].values() %}
-                        <tr><td>{{ item["name"] }} </td><td> {{ item["qty"] }} </td><td>{{ item["subtotal"] }}</td><td>Update Quantity: <form action="changeqty" method="post"><input type="hidden" name="code" value='{{ item["code"] }}''><input type="text" name="qty" value="1"/></td><td colspan="2"><input type="submit" value="Go"/></td></form></tr>
+                        <tr><td>{{ item["name"] }} </td><td> {{ item["qty"] }} </td><td>{{ item["subtotal"] }}</td><td>Update Quantity: <form action="changeqty" method="post"><input type="hidden" name="code" value='{{ item["code"] }}''><input type="text" name="qty" value="1"/></td><td colspan="2"><input type="submit" value="Go"/></td></form>
+                            <td><form action="changeqty" method="post"><input type="hidden" name="code" value='{{ item["code"] }}''><input type="hidden" name="qty" value="0"/></td><td colspan="2"><input type="submit" value="Delete"/></td></form>
+                        </tr>
             {% endfor %}
             <tr><td colspan=2><b>Total</b></td><td><b>{{ session["cart"].values()|sum(attribute="subtotal") }}</b></td></tr>
             </table>
