@@ -13,7 +13,7 @@ def get_product(code):
     products_coll = products_db["products"]
 
     product = products_coll.find_one({"code":code})
-    
+
     return product
 
 def get_products():
@@ -22,16 +22,18 @@ def get_products():
 
     for p in products_coll.find({},{"_id":0}):
         product_list.append(p)
-    
+
     return product_list
 
 def get_orders(username):
     orders_list = []
     orders_coll = order_management_db["orders"]
-    orders_summary = orders_coll.find({"username":username},{"details":1})
+    orders_summary = orders_coll.find({"username":username})
+
     for u in orders_summary:
         for v in u["details"]:
             orders_list.append(v)
+        orders_list.append(dict([("orderdate",u["orderdate"])]))
 
     return orders_list
 

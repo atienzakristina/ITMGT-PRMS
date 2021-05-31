@@ -2,9 +2,9 @@
         <h1>Previous Orders</h1>
 
         <table>
-            <tr><th>Name</th><th>Quantity</th><th>Subtotal</th></tr>
+            <tr><th>Name</th> <th>Quantity </th> <th> Subtotal </th> <th> Date and Time</th></tr>
             {% for order in order_list %}
-            <tr><td> {{order["name"]}} </td><td> {{order["qty"]}} </td><td> {{order["subtotal"]}}</td></tr>
+            <tr><td> {{order["name"]}} </td><td> {{order["qty"]}} </td><td> {{order["subtotal"]}}</td><td> {{ order["orderdate"] }} </td></tr>
             {% endfor %}
         </table>
 {% include "footer.html" %}
