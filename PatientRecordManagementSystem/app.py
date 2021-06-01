@@ -33,7 +33,15 @@ def services():
 
 @app.route('/booking')
 def booking():
-    return render_template('booking.html')
+    services_list = db.get_services()
+    return render_template('booking.html', services_list=services_list)
+
+@app.route('/schedule', methods = ['GET','POST'])
+def appointment():
+    code = request.args.get('code', '')
+    doctor_hours = db.get_schedule(int(code))
+    return render_template('appointmentbooking.html', code=code, doctor_hours=doctor_hours)
+
 
 @app.route('/doctors')
 def doctor():
