@@ -5,8 +5,9 @@
   </div>
   <div class="w3-row-padding">
   <table>
-      <tr><td>Start Time:</td><td>{{doctor_hours[0]}}:00</td></tr>
-      <tr><td>End Time:</td><td>{{doctor_hours[-1]}}:00</td></tr>
+    {% for x in doctor_hours %}
+      <tr><td>Time Slot:</td><td>{{x}}:00</td></tr>
+    {% endfor %}
   </table>
 <form action="/auth" method="POST">
 {% include "footer.html" %}
