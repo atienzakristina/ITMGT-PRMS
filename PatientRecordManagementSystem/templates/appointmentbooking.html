@@ -4,8 +4,9 @@
     <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Select a Schedule</h3>
   </div>
   <div class="w3-row-padding">
-  {% for hour in doctor_hours %}
-      <tr><td>hour</td></tr>
-  {% endfor %}
+  <table>
+      <tr><td>Start Time:</td><td>{{doctor_hours[0]}}:00</td></tr>
+      <tr><td>End Time:</td><td>{{doctor_hours[-1]}}:00</td></tr>
+  </table>
 <form action="/auth" method="POST">
 {% include "footer.html" %}
