@@ -8,6 +8,8 @@ import database as db
 import authentication
 import logging
 
+import appointmentmanagement as am
+
 app = Flask(__name__)
 
 app.secret_key = b'w0w0w333111!'
@@ -42,19 +44,29 @@ def appointment():
     doctor_schedule = db.get_schedule(int(code))
     doctor_hours = list(range(doctor_schedule["start_time"],doctor_schedule["end_time"]))
 
-    # for x in doctor_hours:
-        # if x is defined in appointments:
-            # return None
-        # else:
-            # doctor_available_hours.append(x)
     return render_template('appointmentbooking.html', code=code, doctor_hours=doctor_hours)
 
-@app.route('/confirm', methods = ['GET','POST'])
-def confirm():
-    code = request.args.get('code', '')
+@app.route('/confirmation', methods = ['GET','POST'])
+def confirmation():
+    code = request.form.get('code')
     doctor = db.get_doctor(int(code))
-    timeslot = request.args.get('timeslot', '')
-    return render_template('confirmbooking.html', doctor=doctor,code=code,timeslot=timeslot)
+    timeslot = request.form.get('timeslot')
+    date = request.form.get('date')
+
+    return render_template('confirmbooking.html', date=date, doctor=doctor,code=code,timeslot=timeslot)
+
+
+@app.route('/confirm', methods = ['GET', 'POST'])
+def confirm():
+    code = request.form.get('code')
+    timeslot = request.form.get('timeslot')
+    date = request.form.get('date')
+    am.confirm_appointment(code,timeslot,date)
+    return redirect('/bookingconfirmed')
+
+@app.route('/bookingconfirmed')
+def ordercomplete():
+    return render_template('bookingcomplete.html')
 
 @app.route('/doctors')
 def doctor():

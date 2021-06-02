@@ -7,7 +7,14 @@
   <table>
     <tr><td>Service:</td><td>{{doctor["specialty"]}}</td></tr>
     <tr><td>Doctor:</td><td>Dr. {{doctor["firstname"]}} {{doctor["lastname"]}}</td></tr>
+    <tr><td>Date:</td><td>{{date}}</td></tr>
     <tr><td>Time:</td><td>{{timeslot}}</td></tr>
-
+    <tr><td>
+      <form action="confirm" method="post">
+        <input type="hidden" name="code" value='{{ doctor["code"] }}''>
+        <input type="hidden" name="timeslot" value='{{timeslot}}''>
+        <input type="hidden" name="date" value='{{date}}''>
+      <input type="submit" value="Confirm"/></form>
+    </td></tr>
   </table>
 {% include "footer.html" %}

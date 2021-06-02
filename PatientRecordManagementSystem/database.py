@@ -14,7 +14,7 @@ def get_doctor(code):
     doctor = doctors_coll.find_one({"code":code})
 
     return doctor
-    
+
 def get_doctors():
     doctor_list = []
     doctors_coll = prms_db['doctors']
@@ -36,3 +36,15 @@ def get_schedule(code):
     doctor_hours = doctor_sched["time"]
 
     return doctor_hours
+
+def create_appointment(appointment):
+    appointments_coll = prms_db['appointments']
+    appointments_coll.insert(appointment)
+
+def existing_appointments():
+    appointments_list = []
+    appointments_coll = prms_db['appointments']
+    for a in appointments_coll.find({},{"_id":0,"bookingdate":0}):
+        appointments_list.append(a)
+
+    return appointments_list

@@ -6,10 +6,17 @@
   <div class="w3-row-padding">
   <table>
     <tr><th><b>Available Time Slots</b></th></tr>
+    <form action="confirmation" method="post">
+      <input type="date" name="date"/>
     {% for x in doctor_hours %}
-      <tr><td><a href="confirm?code={{code}}&timeslot={{x}}:00">{{x}}:00</a></td></tr>
-      <tr><td><a href="confirm?code={{code}}&timeslot={{x}}:30">{{x}}:30</a></td></tr>
+      <tr><td><input type="checkbox" name="timeslot" value={{x}}:00>{{x}}:00</td></tr>
+      <tr><td><input type="checkbox" name="timeslot" value={{x}}:30>{{x}}:30</td></tr>
     {% endfor %}
+    <input type="hidden" name="code" value= {{code}} >
+    <input type="submit" value="Select"/>
+    </form>
+    {% if taken is defined %}
+    <tr><th><b>Sorry! That schedule is taken.</b></th></tr>
+    {% endif %}
   </table>
-<form action="/auth" method="POST">
 {% include "footer.html" %}
