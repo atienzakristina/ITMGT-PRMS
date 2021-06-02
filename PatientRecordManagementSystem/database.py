@@ -48,3 +48,19 @@ def existing_appointments():
         appointments_list.append(a)
 
     return appointments_list
+
+def get_appointments(username):
+    appointments_list = []
+    appointments_coll = prms_db['appointments']
+    doctors_coll = prms_db['doctors']
+
+    for a in appointments_coll.find({"username":username},{"_id":0,"bookingdate":0}):
+        code = a["code"]
+        doctor = doctors_coll.find_one({"code":int(code)})
+        appointments_list.append({"date":a["date"],
+                                  "timeslot":a["timeslot"],
+                                  "specialty":doctor["specialty"],
+                                  "firstname":doctor["firstname"],
+                                  "lastname":doctor["lastname"],
+                                  })
+    return appointments_list

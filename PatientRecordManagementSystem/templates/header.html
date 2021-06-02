@@ -1,27 +1,37 @@
 <html>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    .footer {
+      font-size:10px;
+    }
+
+    table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  } 
+
+    body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+  </style>
   <header>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <style>
-      .footer {
-        font-size:10px;
-      }
-    </style>
+    <div class="w3-container">
+        <h1><b>ITM</b> Diagnostics</h1>
+        {% if session["user"] is defined %}
+        <h5>
+          <div class="w3-section w3-bottombar w3-padding-16">
+            <button class="w3-button w3-white"><a href='/home'>Home</a></button> |
+            <button class="w3-button w3-white"><a href='/doctors'>Doctors</a></button> |
+            <button class="w3-button w3-white"><a href='/services'>Available Services</a></button> |
+            <button class="w3-button w3-white"><a href='/booking'>Book an Appointment</a></button> |
+            Welcome, {{ session["user"]["firstname"] }}.
+            <button class="w3-button w3-white"><a href='/myappointments'>My Appointments</a></button> |
+            <button class="w3-button w3-white"><a href='/logout'>Logout   </a></button>
+          </div>
+        </h5>
+        {% endif %}
+    </div>
   </header>
   <body>
-    <div class="w3-top">
-      <div class="w3-bar w3-white w3-wide w3-padding w3-card">
-        <a class="w3-bar-item w3-button"><b>ITM</b> Diagnostics </a>
-        {% if session["user"] is defined %}
-        <div class="w3-right w3-hide-small">
-          <a href='/home'>Home</a> |
-          <a href='/doctors'>Doctors</a> |
-          <a href='/services'>Available Services</a> |
-          <a href='/booking'>Book an Appointment</a> |
-          Welcome, {{ session["user"]["firstname"] }}.
-          <a href='/logout'>Logout   </a>
-        </div>
-        {% endif %}
-      </div>
-    </div>
-    <p/>

@@ -1,0 +1,23 @@
+{% include "header.html" %}
+  <div class="w3-container w3-padding-32" id="doctors">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">My Appointments</h3>
+  </div>
+  <div class="w3-row-padding">
+  {% if appointments_list is defined %}
+  <table>
+    <tr><th>Doctor</th><th>Service</th><th>Date</th><th>Time</th></tr>
+  {% for appointment in appointments_list %}
+      <tr><td>
+        <div class="w3-third w3-container w3-margin-bottom">
+          <div class="w3-container w3-white">
+            <tr><td>Dr. {{appointment["firstname"]}} {{appointment["lastname"]}}</td><td>{{appointment["specialty"]}}</td><td>{{appointment["date"]}}</td><td>{{appointment["timeslot"]}}</td></tr>
+          </div>
+        </div>
+      </td></tr>
+  {% endfor %}
+  </table>
+  {% else %}
+  <div>You do not have any scheduled appointments</div>
+  {% endif %}
+  </div>
+{% include "footer.html" %}

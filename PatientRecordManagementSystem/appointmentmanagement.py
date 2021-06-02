@@ -9,4 +9,5 @@ def confirm_appointment(code,timeslot,date):
     appointment.setdefault("code",code)
     appointment.setdefault("timeslot",timeslot)
     appointment.setdefault("date",date)
+
     db.create_appointment(appointment)

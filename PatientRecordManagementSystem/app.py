@@ -33,6 +33,13 @@ def home():
 def services():
     return render_template('availableservices.html')
 
+@app.route('/myappointments')
+def myappointments():
+    username = session["user"]["username"]
+    appointments_list = db.get_appointments(username)
+
+    return render_template('myappointments.html',appointments_list=appointments_list)
+
 @app.route('/booking')
 def booking():
     services_list = db.get_services()
