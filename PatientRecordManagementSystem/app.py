@@ -41,8 +41,20 @@ def appointment():
     code = request.args.get('code', '')
     doctor_schedule = db.get_schedule(int(code))
     doctor_hours = list(range(doctor_schedule["start_time"],doctor_schedule["end_time"]))
-    return render_template('appointmentbooking.html', doctor_hours=doctor_hours)
 
+    # for x in doctor_hours:
+        # if x is defined in appointments:
+            # return None
+        # else:
+            # doctor_available_hours.append(x)
+    return render_template('appointmentbooking.html', code=code, doctor_hours=doctor_hours)
+
+@app.route('/confirm', methods = ['GET','POST'])
+def confirm():
+    code = request.args.get('code', '')
+    doctor = db.get_doctor(int(code))
+    timeslot = request.args.get('timeslot', '')
+    return render_template('confirmbooking.html', doctor=doctor,code=code,timeslot=timeslot)
 
 @app.route('/doctors')
 def doctor():

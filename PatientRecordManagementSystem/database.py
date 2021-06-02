@@ -9,6 +9,12 @@ def get_user(username):
     patient=patients_coll.find_one({"username":username})
     return patient
 
+def get_doctor(code):
+    doctors_coll = prms_db['doctors']
+    doctor = doctors_coll.find_one({"code":code})
+
+    return doctor
+    
 def get_doctors():
     doctor_list = []
     doctors_coll = prms_db['doctors']
