@@ -8,8 +8,7 @@
     <form action="confirmation" method="post">
       <input type="date" name="date"/>
     {% for x in doctor_hours %}
-      <tr><td><input type="checkbox" name="timeslot" value={{x}}:00>{{x}}:00</td></tr>
-      <tr><td><input type="checkbox" name="timeslot" value={{x}}:30>{{x}}:30</td></tr>
+      <tr><td><input type="checkbox" name="timeslot" value={{x}}>{{x}}</td></tr>
     {% endfor %}
     <input type="hidden" name="code" value= {{code}} >
     <input type="submit" value="Select"/>

@@ -7,6 +7,7 @@ from flask import make_response
 import database as db
 import authentication
 import logging
+import numpy as np
 
 import appointmentmanagement as am
 
@@ -49,9 +50,20 @@ def booking():
 def appointment():
     code = request.args.get('code', '')
     doctor_schedule = db.get_schedule(int(code))
-    doctor_hours = list(range(doctor_schedule["start_time"],doctor_schedule["end_time"]))
+    appointments_list = db.existing_appointments()
+    doctor_range = list(np.arange(doctor_schedule["start_time"],doctor_schedule["end_time"],0.5))
+    doctor_hours = []
+    for x in doctor_range:
+        if x % 1 > 0:
+            y = str(x)
+            z = y.replace(".5",":30")
+            doctor_hours.append(z)
+        else:
+            y = str(x)
+            z = y.replace(".0",":00")
+            doctor_hours.append(z)
 
-    return render_template('appointmentbooking.html', code=code, doctor_hours=doctor_hours)
+    return render_template('appointmentbooking.html',appointments_list=appointments_list, code=code, doctor_hours=doctor_hours)
 
 @app.route('/confirmation', methods = ['GET','POST'])
 def confirmation():
