@@ -6,7 +6,7 @@
   {% for service in services_list %}
   <div class="w3-third w3-container w3-margin-bottom">
     <div class="w3-container w3-white">
-    <h4><a href="date?code={{service["code"]}}">{{service["specialty"]}}</a></h4>
+    <button class="w3-button w3-white"><h5><a href="date?code={{service["code"]}}">{{service["specialty"]}}</a></h5></button>
     </div>
   </div>
   {% endfor %}
