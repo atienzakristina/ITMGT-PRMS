@@ -1,9 +1,12 @@
 {% include "header.html" %}
-  <div class="w3-container w3-padding-32" id="booking">
-    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16"><b>{{doctor["specialty"]}}</b> - <b>{{date}}</b> - Select a Schedule</h3>
+  <div class="w3-container w3-padding-10" id="booking">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-10">Select a Schedule</h3><h6><b>{{doctor["specialty"]}}</b> ( {{date}} )</h6>
   </div>
   <div class="w3-row-padding">
-  <table>
+  <table
+  style="width:100%;height:300px"
+
+  >
     <tr><th><b>Available Time Slots</b></th></tr>
     <form action="confirmation" method="post">
     {% for x in doctor_available_hours %}

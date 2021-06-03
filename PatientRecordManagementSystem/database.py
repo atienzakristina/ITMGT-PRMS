@@ -54,7 +54,7 @@ def get_appointments(username):
     appointments_coll = prms_db['appointments']
     doctors_coll = prms_db['doctors']
 
-    for a in appointments_coll.find({"username":username},{"_id":0,"bookingdate":0}):
+    for a in appointments_coll.find({"username":username}):
         code = a["code"]
         doctor = doctors_coll.find_one({"code":int(code)})
         appointments_list.append({"date":a["date"],
@@ -64,3 +64,9 @@ def get_appointments(username):
                                   "lastname":doctor["lastname"],
                                   })
     return appointments_list
+
+
+
+def create_account(username,password,firstname,lastname,age):
+    patients_coll = prms_db['patients']
+    patients_coll.insert({"username":username,"password":password,"firstname":firstname,"lastname":lastname,"age":int(age)})

@@ -1,0 +1,25 @@
+{% include "header.html" %}
+<div style = "position:relative; left:562px; top:120px">
+<h1>Input Information</h1>
+</div>
+<form action="/inputinfo" method="POST">
+   <div style = "position:relative; left:630px; top:120px;">
+     First Name:
+   <br><input type="text" name="firstname"></input>
+   </div>
+   <div style = "position:relative; left:630px; top:130px;">
+     Last Name:
+   <br><input type="text" name="lastname"></input>
+   </div>
+   <div style = "position:relative; left:630px; top:130px;">
+     Age:
+   <br><input type="number" name="age" min="18" max="100"></input>
+   </div>
+   <div style = "position:relative; left:659px; top:145px;">
+   <input type="hidden" name="username" value= {{username}} >
+   <input type="hidden" name="password" value= {{password}} >
+   <input type="submit" value="Create Account"/>
+   </div>
+
+</form>
+</html>

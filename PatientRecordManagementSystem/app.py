@@ -22,6 +22,32 @@ app.logger.setLevel(logging.INFO)
 def login():
     return render_template('login.html')
 
+@app.route('/createaccount')
+def createaccount():
+    return render_template('createaccount.html')
+
+@app.route('/verify', methods = ['GET','POST'])
+def adduser():
+    username = request.form.get('username')
+    password = request.form.get('password')
+    password2 = request.form.get('password2')
+    if password == password2:
+        return render_template('inputinfo.html', username=username,password=password)
+    else:
+        return redirect('/createaccount')
+
+@app.route('/inputinfo', methods = ['GET','POST'])
+def inputinfo():
+    username = request.form.get('username')
+    password = request.form.get('password')
+    firstname = request.form.get('firstname')
+    lastname = request.form.get('lastname')
+    age = request.form.get('age')
+    db.create_account(username,password,firstname,lastname,age)
+
+    return redirect('/')
+
+
 @app.route('/tryagain')
 def tryagain():
     return render_template('tryagain.html')
@@ -38,8 +64,10 @@ def services():
 def myappointments():
     username = session["user"]["username"]
     appointments_list = db.get_appointments(username)
-
-    return render_template('myappointments.html',appointments_list=appointments_list)
+    if len(appointments_list) == 0:
+        return render_template('myappointments.html')
+    else:
+        return render_template('myappointments.html',appointments_list=appointments_list)
 
 @app.route('/booking')
 def booking():

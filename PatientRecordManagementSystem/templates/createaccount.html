@@ -1,0 +1,23 @@
+{% include "header.html" %}
+<div style = "position:relative; left:562px; top:120px">
+<h1>Create an Account</h1>
+</div>
+<form action="/verify" method="POST">
+   <div style = "position:relative; left:630px; top:120px;">
+     Email Address:
+   <br><input type="text" name="username"></input>
+   </div>
+   <div style = "position:relative; left:630px; top:130px;">
+     Password:
+   <br><input type="password" name="password"></input>
+   </div>
+   <div style = "position:relative; left:630px; top:130px;">
+     Re-Enter Password:
+   <br><input type="password" name="password2"></input>
+   </div>
+   <div style = "position:relative; left:694px; top:145px;">
+   <input type="submit" value="Verify"/>
+   </div>
+
+</form>
+</html>
