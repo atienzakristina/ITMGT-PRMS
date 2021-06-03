@@ -41,10 +41,10 @@ def create_appointment(appointment):
     appointments_coll = prms_db['appointments']
     appointments_coll.insert(appointment)
 
-def existing_appointments():
+def existing_appointments(code,date,timeslot):
     appointments_list = []
     appointments_coll = prms_db['appointments']
-    for a in appointments_coll.find({},{"_id":0,"bookingdate":0}):
+    for a in appointments_coll.find({"code":code,"date":date,"timeslot":timeslot}):
         appointments_list.append(a)
 
     return appointments_list

@@ -1,20 +1,17 @@
 {% include "header.html" %}
   <div class="w3-container w3-padding-32" id="booking">
-    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Select a Schedule</h3>
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16"><b>{{doctor["specialty"]}}</b> - <b>{{date}}</b> - Select a Schedule</h3>
   </div>
   <div class="w3-row-padding">
   <table>
     <tr><th><b>Available Time Slots</b></th></tr>
     <form action="confirmation" method="post">
-      <input type="date" name="date"/>
-    {% for x in doctor_hours %}
+    {% for x in doctor_available_hours %}
       <tr><td><input type="checkbox" name="timeslot" value={{x}}>{{x}}</td></tr>
     {% endfor %}
     <input type="hidden" name="code" value= {{code}} >
+    <input type="hidden" name="date" value= {{date}} >
     <input type="submit" value="Select"/>
     </form>
-    {% if taken is defined %}
-    <tr><th><b>Sorry! That schedule is taken.</b></th></tr>
-    {% endif %}
   </table>
 {% include "footer.html" %}

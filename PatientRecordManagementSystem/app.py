@@ -46,13 +46,22 @@ def booking():
     services_list = db.get_services()
     return render_template('booking.html', services_list=services_list)
 
+@app.route('/date', methods = ['GET','POST'])
+def date():
+    code = request.args.get('code', '')
+    doctor = db.get_doctor(int(code))
+    return render_template('date.html',code=code, doctor=doctor)
+
+
 @app.route('/schedule', methods = ['GET','POST'])
 def appointment():
-    code = request.args.get('code', '')
+    date = request.form.get('date')
+    code = request.form.get('code')
+    doctor = db.get_doctor(int(code))
     doctor_schedule = db.get_schedule(int(code))
-    appointments_list = db.existing_appointments()
     doctor_range = list(np.arange(doctor_schedule["start_time"],doctor_schedule["end_time"],0.5))
     doctor_hours = []
+
     for x in doctor_range:
         if x % 1 > 0:
             y = str(x)
@@ -62,8 +71,14 @@ def appointment():
             y = str(x)
             z = y.replace(".0",":00")
             doctor_hours.append(z)
+    doctor_available_hours = []
+    for y in doctor_hours:
+        if len(db.existing_appointments(str(code),date,y)) == 0:
+            doctor_available_hours.append(y)
+        else:
+            pass
 
-    return render_template('appointmentbooking.html',appointments_list=appointments_list, code=code, doctor_hours=doctor_hours)
+    return render_template('appointmentbooking.html', doctor=doctor,date=date, code=code, doctor_available_hours=doctor_available_hours)
 
 @app.route('/confirmation', methods = ['GET','POST'])
 def confirmation():
