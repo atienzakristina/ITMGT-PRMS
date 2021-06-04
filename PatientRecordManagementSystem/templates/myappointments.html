@@ -5,11 +5,11 @@
   <div class="w3-row-padding">
   {% if appointments_list is defined %}
   <table style="width:100%;length:100%">
-    <tr><th>Doctor</th><th>Service</th><th>Date</th><th>Time</th></tr>
+    <tr><th>Doctor</th><th>Service</th><th>Date</th><th>Time</th><th>Status</th></tr>
   {% for appointment in appointments_list %}
         <div class="w3-third w3-container w3-margin-bottom">
           <div class="w3-container w3-white">
-            <tr><td style="width:400px;height:50px;text-align:center">Dr. {{appointment["firstname"]}} {{appointment["lastname"]}}</td><td style="width:400px;height:50px;text-align:center">{{appointment["specialty"]}}</td><td style="width:400px;height:50px;text-align:center">{{appointment["date"]}}</td><td style="width:300px;height:50px;text-align:center">{{appointment["timeslot"]}}</td></tr>
+            <tr><td style="width:400px;height:50px;text-align:center">Dr. {{appointment["firstname"]}} {{appointment["lastname"]}}</td><td style="width:400px;height:50px;text-align:center">{{appointment["specialty"]}}</td><td style="width:400px;height:50px;text-align:center">{{appointment["date"]}}</td><td style="width:300px;height:50px;text-align:center">{{appointment["timeslot"]}}</td><td style="width:300px;height:50px;text-align:center">{{appointment["status"]}}</td></tr>
           </div>
         </div>
   {% endfor %}

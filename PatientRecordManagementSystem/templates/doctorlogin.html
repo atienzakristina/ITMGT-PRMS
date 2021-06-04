@@ -1,8 +1,8 @@
 {% include "header.html" %}
 <div style = "position:relative; text-align:center; top:120px">
-<h1>Login</h1>
+<h1>Doctor Login</h1>
 </div>
-<form action="/auth" method="POST">
+<form action="/doctorauth" method="POST">
    <div style = "position:relative; left:620px; top:120px;">
      Username:
    <br><input type="text" name="username"></input>
@@ -13,15 +13,6 @@
    </div>
    <div style = "position:relative; text-align:center; top:145px;">
    <input type="submit" value="Login"/>
-   </div>
-   <p/>
-   <div style = "position:relative; text-align:center; top:145px;">
-   <a href='/createaccount'>Don't have an account?
-     Click here to create one</a>
-   </div>
-   <p/>
-   <div style = "position:relative;top:145px; text-align:center">
-   <a href='/doctorlogin'>Doctor Login</a>
    </div>
 </form>
 </html>

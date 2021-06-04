@@ -9,6 +9,11 @@ def get_user(username):
     patient=patients_coll.find_one({"username":username})
     return patient
 
+def get_doctor_account(username):
+    doctors_coll = prms_db['doctors']
+    doctor=doctors_coll.find_one({"username":username})
+    return doctor
+
 def get_doctor(code):
     doctors_coll = prms_db['doctors']
     doctor = doctors_coll.find_one({"code":code})
@@ -59,13 +64,53 @@ def get_appointments(username):
         doctor = doctors_coll.find_one({"code":int(code)})
         appointments_list.append({"date":a["date"],
                                   "timeslot":a["timeslot"],
+                                  "status":a["status"],
                                   "specialty":doctor["specialty"],
                                   "firstname":doctor["firstname"],
                                   "lastname":doctor["lastname"],
                                   })
     return appointments_list
 
+def pending_appointments(code):
+    pending_list = []
+    appointments_coll = prms_db['appointments']
+    patients_coll = prms_db['patients']
 
+    for a in appointments_coll.find({"code":str(code),"status":"Pending"}):
+        patient_user = a["username"]
+        patient = patients_coll.find_one({"username":patient_user})
+        pending_list.append({"firstname":patient["firstname"],
+                             "lastname":patient["lastname"],
+                             "code":a["code"],
+                             "date":a["date"],
+                             "timeslot":a["timeslot"],
+                             "status":a["status"],
+                             })
+    return pending_list
+
+def accept_appointment(code,date,timeslot):
+    appointment_coll = prms_db['appointments']
+    appointment = appointment_coll.update_one({"code":str(code),"date":date,"timeslot":timeslot},{"$set":{"status":"Accepted"}})
+
+def reject_appointment(code,date,timeslot):
+    appointment_coll = prms_db['appointments']
+    appointment = appointment_coll.update_one({"code":str(code),"date":date,"timeslot":timeslot},{"$set":{"status":"Rejected"}})
+
+def accepted_appointments(code):
+    accepted_list = []
+    appointments_coll = prms_db['appointments']
+    patients_coll = prms_db['patients']
+
+    for a in appointments_coll.find({"code":str(code),"status":"Accepted"}):
+        patient_user = a["username"]
+        patient = patients_coll.find_one({"username":patient_user})
+        accepted_list.append({"firstname":patient["firstname"],
+                              "lastname":patient["lastname"],
+                              "date":a["date"],
+                              "timeslot":a["timeslot"],
+                              "status":a["status"],
+                             })
+    return accepted_list
 
 def create_account(username,password,firstname,lastname,age):
     patients_coll = prms_db['patients']

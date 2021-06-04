@@ -6,6 +6,7 @@ from bson.json_util import loads, dumps
 from flask import make_response
 import database as db
 import authentication
+import doctorauthentication
 import logging
 import numpy as np
 
@@ -21,6 +22,10 @@ app.logger.setLevel(logging.INFO)
 @app.route('/')
 def login():
     return render_template('login.html')
+
+@app.route('/doctorlogin')
+def doctorlogin():
+    return render_template('doctorlogin.html')
 
 @app.route('/createaccount')
 def createaccount():
@@ -148,7 +153,63 @@ def auth():
     else:
         return redirect('/tryagain')
 
+@app.route('/doctorauth', methods = ['GET', 'POST'])
+def doctorauth():
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    is_successful, doctor = doctorauthentication.login(username, password)
+    app.logger.info('%s', is_successful)
+    if(is_successful):
+        session["doctor"] = doctor
+        return redirect('/home')
+    else:
+        return redirect('/doctorlogin')
+
+@app.route('/pendingappointments', methods = ['GET', 'POST'])
+def pendingappointments():
+    doctor = session["doctor"]["username"]
+    doctor_coll = db.get_doctor_account(doctor)
+    code = doctor_coll["code"]
+
+    pending_list = db.pending_appointments(code)
+
+    if len(pending_list) == 0:
+        return render_template('pendingappointments.html')
+    else:
+        return render_template('pendingappointments.html',pending_list=pending_list)
+
+@app.route('/accept', methods = ['GET', 'POST'])
+def accept():
+    code = request.form.get('code')
+    date = request.form.get('date')
+    timeslot = request.form.get('timeslot')
+    db.accept_appointment(code,date,timeslot)
+
+    return redirect('/acceptedappointments')
+
+@app.route('/acceptedappointments')
+def acceptedappointments():
+    doctor = session["doctor"]["username"]
+    doctor_coll = db.get_doctor_account(doctor)
+    code = doctor_coll["code"]
+    accepted_list = db.accepted_appointments(code)
+    if len(accepted_list) == 0:
+        return render_template('acceptedappointments.html')
+    else:
+        return render_template('acceptedappointments.html',accepted_list=accepted_list)
+
+@app.route('/reject', methods = ['GET', 'POST'])
+def rejectt():
+    code = request.form.get('code')
+    date = request.form.get('date')
+    timeslot = request.form.get('timeslot')
+    db.reject_appointment(code,date,timeslot)
+
+    return redirect('/pendingappointments')
+
 @app.route('/logout')
 def logout():
     session.pop("user",None)
+    session.pop("doctor",None)
     return redirect('/')

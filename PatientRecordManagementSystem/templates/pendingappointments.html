@@ -1,0 +1,39 @@
+{% include "header.html" %}
+  <div class="w3-container w3-padding-10" id="doctors">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-10">My Appointments</h3>
+  </div>
+  <div class="w3-row-padding">
+  {% if pending_list is defined %}
+  <table style="width:100%;length:100%">
+    <tr><th>Patient</th><th>Date</th><th>Time</th><th>Accept/Reject</th></tr>
+  {% for appointment in pending_list %}
+        <div class="w3-third w3-container w3-margin-bottom">
+          <div class="w3-container w3-white">
+            <tr>
+              <td style="width:400px;height:50px;text-align:center">{{appointment["firstname"]}} {{appointment["lastname"]}}</td>
+              <td style="width:400px;height:50px;text-align:center">{{appointment["date"]}}</td>
+              <td style="width:300px;height:50px;text-align:center">{{appointment["timeslot"]}}</td>
+              <td style="width:300px;height:50px;text-align:center">
+              <form action="/accept" method="POST">
+                <input type="hidden" name="code" value= {{appointment["code"]}} >
+                <input type="hidden" name="date" value= {{appointment["date"]}} >
+                <input type="hidden" name="timeslot" value= {{appointment["timeslot"]}} >
+              <input type="submit" value="Accept"/>
+              </form>
+              <form action="/reject" method="POST">
+                <input type="hidden" name="code" value= {{appointment["code"]}} >
+                <input type="hidden" name="date" value= {{appointment["date"]}} >
+                <input type="hidden" name="timeslot" value= {{appointment["timeslot"]}} >
+              <input type="submit" value="Reject"/>
+              </form>
+              </td>
+            </tr>
+          </div>
+        </div>
+  {% endfor %}
+  </table>
+  {% else %}
+  <div>You do not have any pending appointments.</div>
+  {% endif %}
+  </div>
+{% include "footer.html" %}

@@ -59,6 +59,15 @@
             <button class="w3-button w3-white"><a href='/logout'>Logout   </a></button>
           </div>
         </h5>
+        {% elif session["doctor"] is defined %}
+        <h5>
+            Welcome, Dr. {{ session["doctor"]["firstname"] }}.
+            <button class="w3-button w3-white"><a href='/pendingappointments'>Your Pending Appointments</a></button> |
+            <button class="w3-button w3-white"><a href='/acceptedappointments'>Your Scheduled Appointments</a></button> |
+            <button class="w3-button w3-white"><a href='/logout'>Logout   </a></button>
+          </div>
+        </h5>
+
         {% endif %}
     </div>
   </header>
