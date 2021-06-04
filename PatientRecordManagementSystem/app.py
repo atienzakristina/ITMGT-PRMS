@@ -162,7 +162,7 @@ def doctorauth():
     app.logger.info('%s', is_successful)
     if(is_successful):
         session["doctor"] = doctor
-        return redirect('/home')
+        return redirect('/acceptedappointments')
     else:
         return redirect('/doctorlogin')
 
